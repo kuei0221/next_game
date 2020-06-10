@@ -1,0 +1,17 @@
+<div class='col-md-4'>
+  <div class='card mb-4 shadow-sm'>
+    <img class='bg-placeholder-img card-img-top' src="" alt="">
+    <div class='card-body'>
+      <%= link_to game.name, game_path(game.id), class: 'card-title' %>
+      <ul class='list-group list-group-flush'>
+        <li class='list-group-item'>Price: <%= game.price %></li>
+        <li class='list-group-item'>Platform: <%= game.platform.name %></li>
+        <li class='list-group-item'></li>
+      </ul>
+    </div>
+    <div class='btn-group'>
+      <a href="#" class='btn btn-outline-primary'>Buy Now!</a>
+      <a href="#" class='btn btn-outline-secondary'>Add To My Basket!</a>
+    </div>
+  </div>
+</div>

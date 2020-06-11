@@ -1,6 +1,6 @@
 <div class='col-md-4'>
   <div class='card mb-4 shadow-sm'>
-    <img class='bg-placeholder-img card-img-top' src="" alt="">
+    <%= image_tag game.cover, class:'bg-placeholder-img card-img-top' if game.cover.attached? %>
     <div class='card-body'>
       <%= link_to game.name, game_path(game.id), class: 'card-title' %>
       <ul class='list-group list-group-flush'>

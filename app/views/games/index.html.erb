@@ -3,6 +3,14 @@
     <h1>Here to Buy Next Game, Bro!</h1>
   </div>
 </section>
+<nav class="navbar navbar-dark bg-dark">
+  <%= link_to 'PS4', games_path(platform: 1), class: 'btn btn-success', platform: 'ps4'%>
+  <%= link_to 'NS', games_path(platform: 2), class: 'btn btn-success', platform: 'ps4'%>
+  <%= form_tag({ controller: 'games', action: 'index' }, method: 'get', class: 'form-inline') do %>
+    <%= text_field_tag :name, '', class: 'form-control mr-sm-2' %>
+    <%= submit_tag :commit, class: 'btn btn-outline-success my-2 my-sm-0' %>
+  <% end %>
+</nav>
 
 <div class='container bg-light py-5'>
   <div class='row'>

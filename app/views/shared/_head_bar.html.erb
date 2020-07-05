@@ -1,0 +1,14 @@
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+  <h5 class="my-0 mr-md-auto font-weight-normal"><%= link_to 'NextGame', root_path %></h5>
+  <nav class="my-2 my-md-0 mr-md-3">
+    <%= link_to 'Games', games_path, class: 'p-2 text-dark' %>
+    <% if user_signed_in? %>
+      <%= link_to 'Cart', cart_path, class: 'p-2 text-dark' %>
+      <%= link_to 'Stock', stocks_path, class: 'p-2 text-dark' %>
+      <%= link_to 'LogOut', destroy_user_session_path, method: 'delete', class: 'p-2 btn btn-outline-danger btn-sm' %>
+    <% else %>
+      <%= link_to 'SignUp', new_user_registration_path, class: 'p-2 btn btn-outline-secondary btn-sm' %>
+      <%= link_to 'SignIn', user_session_path, class: 'p-2 btn btn-outline-primary btn-sm' %>
+    <% end %>
+  </nav>
+</div>

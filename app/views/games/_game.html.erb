@@ -1,17 +1,17 @@
 <div class='col-md-4'>
-  <div class='card mb-4 shadow-sm'>
-    <%= image_tag game.cover, class:'bg-placeholder-img card-img-top' if game.cover.attached? %>
-    <div class='card-body'>
-      <%= link_to game.name, game_path(game.id), class: 'card-title' %>
-      <ul class='list-group list-group-flush'>
-        <li class='list-group-item'>Price: <%= game.price %></li>
-        <li class='list-group-item'>Platform: <%= game.platform.name %></li>
-        <li class='list-group-item'></li>
-      </ul>
+  <div class='card mb-4'>
+    <div class='card-header' style='transform: rotate(0)'>
+      <%= image_tag(game.cover, class:'bg-placeholder-img card-img-top my-3') if game.cover.attached? %>
+      <%= link_to game.name, game_path(game.id), class: 'text-dark font-weight-bold text-lg stretched-link' %>
     </div>
-    <div class='btn-group'>
-      <a href="#" class='btn btn-outline-primary'>Buy Now!</a>
-      <a href="#" class='btn btn-outline-secondary'>Add To My Basket!</a>
+    <div class='card-body'>
+      <% if game.stocks.size.positive? %>
+        <p class='card-text' style='transform: rotate(0)'>Only Need <%= game.lowest_price %>!
+          <%= link_to 'Buy Now', '#', class: 'btn btn-outline-primary ml-5 stretched-link' %>
+        </p>
+      <% else %>
+        <p class='card-text text-danger'>Sorry Out Of Stock!</p>
+      <% end %>
     </div>
   </div>
 </div>

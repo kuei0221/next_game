@@ -1,18 +1,22 @@
-<section class='text-center mb-5'>
-  <div class='container'>
-    <h1>Here to Buy Next Game, Bro!</h1>
-  </div>
-</section>
-<nav class="navbar navbar-dark bg-dark">
-  <%= link_to 'PS4', games_path(platform: 1), class: 'btn btn-success', platform: 'ps4'%>
-  <%= link_to 'NS', games_path(platform: 2), class: 'btn btn-success', platform: 'ps4'%>
+<nav class="navbar navbar-dark bg-light">
+  <ul class='navbar nav'>
+    <li>
+      <%= link_to 'ALL', games_path, class: 'nav-item btn btn-success mx-2' %>
+    </li>
+    <li>
+      <%= link_to 'PS4', games_path(platform: 1), class: 'nav-item btn btn-success mx-2' %>
+    </li>
+    <li>
+      <%= link_to 'NS', games_path(platform: 2), class: 'nav-item btn btn-success mx-2' %>
+    </li>
+  </ul>
   <%= form_tag({ controller: 'games', action: 'index' }, method: 'get', class: 'form-inline') do %>
     <%= text_field_tag :name, '', class: 'form-control mr-sm-2' %>
     <%= submit_tag :commit, class: 'btn btn-outline-success my-2 my-sm-0' %>
   <% end %>
 </nav>
-
-<div class='container bg-light py-5'>
+<div id='error_explanation'></div>
+<div class='container my-5'>
   <div class='row'>
     <%= render partial: 'game', collection: @games %>
   </div>

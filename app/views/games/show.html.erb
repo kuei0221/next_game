@@ -1,20 +1,47 @@
 <div class='card shadow-sm'>
   <div class='row no-gutters'>
     <div class='col-md-4'>
-      <%= image_tag @game.cover if @game.cover.attached? %>
+      <%= image_tag @game.cover, class: 'bg-placeholder-img card-img-top' if @game.cover.attached? %>
     </div>
     <div class='col-md-8'>
+      <div class='card-header'>
+        <h3 class='card-title text-center'><%= @game.name %></h3>
+      </div>
       <div class='card-body'>
-        <h3><%= @game.name %></h3>
-        <ul class='list-group list-group-flust no-glutters'>
-          <li class='list-group-item'>Price: <%= @game.price %></li>
-          <li class='list-group-item'>Platfrm: <%= @game.platform.name %></li>
-          <li class='list-group-item'>Stock: 0</li>
+        <ul class='list-group list-group-horizontal'>
+          <li class='list-group-item col'>Base Price: <%= @game.price %></li>
+          <li class='list-group-item col'>Lowest Price: <%= @game.lowest_price %></li>
         </ul>
-        <div class='btn-group'>
-          <a href="" class='btn btn-outline-primary'>Buy Now!</a>
-          <a href="" class='btn btn-outline-secondary'>Add To My Basket!</a>
+        <ul class='list-group list-group-horizontal'>
+          <li class='list-group-item col'>Total Quantity: <%= @game.total_quantity %></li>
+          <li class='list-group-item col'>Platform: <%= @game.platform.name %></li>
+        </ul>
+        <div class='btn-group col my-3'>
+          <%= link_to 'Buy Now!', '#', class: 'btn btn-outline-primary' %>
+          <button class='btn btn-outline-danger'>Sell Now!</button>
         </div>
+
+        <div class='card-footer' id='new-stock-form'>
+          <div id='error_explanation'></div>
+          <%= form_for StockForm.new, as: :stock, url: stocks_path, method: 'post', remote: true, html: { class: 'form-inline' } do |f| %>
+            <%= f.hidden_field :game_id, value: @game.id %>
+            <%= f.text_field :price, class: 'form-control mr-5', placeholder: 'How Much?'%>
+            <%= f.text_field :quantity, class: 'form-control mr-5', placeholder: 'How Many' %>
+            <%= f.submit 'create!', class: 'form-control' %>
+          <% end %>
+        </div>
+
+        <table class='table'>
+          <thead>
+            <th>Price</th>
+            <th>Quanity</th>
+            <th>Owner</th>
+            <th>Number</th>
+          </thead>
+          <tbody>
+            <%= render partial: 'game_stock', collection: @game.stocks, as: :stock %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

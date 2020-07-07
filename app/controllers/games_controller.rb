@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class GamesController < ApplicationController
+  include HasCart
 
   def show
     @game = Game.includes(stocks: :user).find_by(id: params[:id])
     unless @game
-      flash.alert = 'Game not Found'
+      flash.alert = 'Game Not Found'
       redirect_to games_path
     end
   end

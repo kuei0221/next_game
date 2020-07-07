@@ -7,7 +7,7 @@
     <div class='card-body'>
       <% if game.stocks.size.positive? %>
         <p class='card-text' style='transform: rotate(0)'>Only Need <%= game.lowest_price %>!
-          <%= link_to 'Buy Now', '#', class: 'btn btn-outline-primary ml-5 stretched-link' %>
+          <%= link_to 'Buy Now', add_cart_path(game_id: game.id), method: 'post', remote: true, class: 'btn btn-outline-primary ml-5 stretched-link' %>
         </p>
       <% else %>
         <p class='card-text text-danger'>Sorry Out Of Stock!</p>

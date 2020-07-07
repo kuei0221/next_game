@@ -1,0 +1,40 @@
+<h5>My Cart</h5>
+
+<table class="table my-3">
+  <thead>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Owner</th>
+    <th>Quantity</th>
+    <th>Total</th>
+    <th></th>
+  </thead>
+  <tbody>
+    <% @current_cart.cart_items.each do |item| %>
+      <tr>
+        <td><%= link_to item.stock.game_name, game_path(item.stock.game_id) %></td>
+        <td><%= item.stock.price %></td>
+        <td><%= item.stock.user.email %></td>
+        <td>
+          <%= form_tag change_cart_path(stock_id: item.stock_id), method:'patch', class: 'form-inline' do %>
+            <%= select_tag :quantity, options_for_select(1..item.stock.quantity, item.quantity), class: 'form-control mr-5' %>
+            <%= submit_tag 'Update!', class: 'form-control btn btn-outline-primary' %>
+          <% end %>
+        </td>
+        <td><%= item.total_price %></td>
+        <td><%= link_to 'Remove!', remove_cart_path(stock_id: item.stock_id), method: 'delete', class: 'btn btn-outline-danger' %></td>
+      </tr>
+    <% end %>
+    <tr class='bg-light'>
+      <td>Total</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><%= @current_cart.total_price %></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<%= link_to 'CheckOut!', '#', class: 'btn btn-lg btn-primary btn-block' %>
+

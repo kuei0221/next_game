@@ -2,18 +2,16 @@ default: &default
   adapter: postgresql
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
-  username: michaelhuang
-  password: <%= ENV['DB_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL']%>
   
-development:
+production:
   <<: *default
-  database: next_game_development
+  database: next_game
 
 test:
   <<: *default
   database: next_game_test
 
-production:
+development:
   <<: *default
-  database: next_game_production
-  password: <%= ENV['DB_PASSWORD'] %>
+  database: next_game_development

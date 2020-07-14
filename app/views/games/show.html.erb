@@ -19,7 +19,7 @@
           <li class='list-group-item col'>Platform: <%= @game.platform.name %></li>
         </ul>
         <div class='btn-group col my-3'>
-          <%= link_to 'Buy Now!', add_cart_path(game_id: @game.id), method: 'post', remote: true, class: 'btn btn-outline-primary' %>
+          <%= link_to 'Buy Now!', add_cart_path(game_id: @game.id), method: 'post', remote: true, class: 'buy-button btn btn-outline-primary' %>
           <button type='button' class='btn btn-outline-danger' data-toggle="collapse" data-target="#new-stock-form">Sell Now!</button>
         </div>
 

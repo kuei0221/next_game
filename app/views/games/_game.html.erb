@@ -1,8 +1,8 @@
 <div class='col-md-4'>
   <div class='card mb-4'>
     <div class='card-header' style='transform: rotate(0)'>
-      <%= image_tag(game.cover, class:'bg-placeholder-img card-img-top my-3') if game.cover.attached? %>
-      <%= link_to game.name, game_path(game.id), class: 'text-dark font-weight-bold text-lg stretched-link' %>
+      <%= image_tag(game.cover, class:'my-3 img-thumbnail') if game.cover.attached? %>
+      <div><%= link_to game.name, game_path(game.id), class: 'text-dark font-weight-bold text-lg stretched-link' %></div>
     </div>
     <div class='card-body'>
       <% if game.stocks.size.positive? %>

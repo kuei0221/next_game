@@ -3,7 +3,7 @@
 <div class='card shadow-sm'>
   <div class='row no-gutters'>
     <div class='col-md-4'>
-      <%= image_tag @game.cover, class: 'bg-placeholder-img card-img-top' if @game.cover.attached? %>
+      <%= image_tag @game.cover, class: 'bg-placeholder-img card-img-top img-thumbnail' if @game.cover.attached? %>
     </div>
     <div class='col-md-8'>
       <div class='card-header'>
@@ -20,16 +20,16 @@
         </ul>
         <div class='btn-group col my-3'>
           <%= link_to 'Buy Now!', add_cart_path(game_id: @game.id), method: 'post', remote: true, class: 'btn btn-outline-primary' %>
-          <button class='btn btn-outline-danger'>Sell Now!</button>
+          <button type='button' class='btn btn-outline-danger' data-toggle="collapse" data-target="#new-stock-form">Sell Now!</button>
         </div>
 
-        <div class='card-footer' id='new-stock-form'>
+        <div class='collapse card-footer' id='new-stock-form'>
           <div id='error_explanation'></div>
           <%= form_for StockForm.new, as: :stock, url: stocks_path, method: 'post', remote: true, html: { class: 'form-inline' } do |f| %>
             <%= f.hidden_field :game_id, value: @game.id %>
             <%= f.text_field :price, class: 'form-control mr-5', placeholder: 'How Much?'%>
-            <%= f.text_field :quantity, class: 'form-control mr-5', placeholder: 'How Many' %>
-            <%= f.submit 'create!', class: 'form-control' %>
+            <%= f.text_field :quantity, class: 'form-control mr-5', placeholder: 'How Many?' %>
+            <%= f.submit 'Sell!', class: 'form-control'%>
           <% end %>
         </div>
 

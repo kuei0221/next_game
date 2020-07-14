@@ -9,6 +9,7 @@ require("@rails/activestorage").start()
 require("channels")
 require('jquery')
 require('bootstrap')
+require('packs/buy_button_error')
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets

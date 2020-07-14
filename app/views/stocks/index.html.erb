@@ -1,17 +1,21 @@
 <%= render 'devise/shared/error_messages', resource: @form %>
 
 <h3 class='my-5'>My Stock</h3>
-<table class='table table-hover'>
-  <thead class='thead-light text-center'>
-    <th>Name</th>
-    <th>Base Price</th>
-    <th>Price</th>
-    <th>Quantity</th>
-    <th>State</th>
-    <th></th>
-    <th></th>
-  </thead>
-  <tbody>
+
+<div class="table" id='stocks_table'>
+  <div class='thead'>
+    <div class='tr'>
+      <div class='td'>Name</div>
+      <div class='td'>Base Price</div>
+      <div class='td'>Price</div>
+      <div class='td'>Quantity</div>
+      <div class='td'>State</div>
+      <div class='td'>Action</div>
+      <div class='td'></div>
+    </div>
+  </div>
+  <div class='tbody'>
     <%= render partial: 'stock', collection: @stocks %>
-  </tbody>
-</table>
+  </div>
+</div>
+

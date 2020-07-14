@@ -1,14 +1,10 @@
-<tr class='text-center' id="stock-<%= stock.id %>">
-  <%= form_for stock do |f| %>
-    <td class='align-middle'><%= stock.game_name %></td>
-    <td class='align-middle'><%= stock.game_price %></td>
-    <td><%= f.text_field :price, value: stock.price, class: 'form-control',id: "stock-#{stock.id}-price" %></td>
-    <td><%= f.text_field :quantity, value: stock.quantity, class: 'form-control', id: "stock-#{stock.id}-quantity" %></td>
-    <td><%= f.select :state, Stock.states.keys, { selected: stock.state }, { class: 'form-control', id: "stock-#{stock.id}-state"} %></td>
-    <%= f.hidden_field :stock_id, value: stock.id %>
-    <td><%= f.submit 'save', class: 'btn btn-secondary form-control'%></td>
-  <% end %>
-  <td>
-    <%= link_to 'delete', stock_path(stock), method: 'delete', class: 'btn btn-secondary', data: { confirm: 'Are You Sure You Want To Delete This Stock?' } %>
-  </td>
-</tr>
+<%= form_for stock, html: {class: 'tr'} do |f| %>
+  <div class='td'><%= stock.game_name %></div>
+  <div class='td'><%= stock.game_price %></div>
+  <div class='td'><%= f.text_field :price, value: stock.price, class: 'form-control' %></div>
+  <div class='td'><%= f.text_field :quantity, value: stock.quantity, class: 'form-control' %></div>
+  <div class='td'><%= f.select :state, Stock.states.keys, { selected: stock.state }, class: 'form-control'%></div>
+  <%= f.hidden_field :stock_id, value: stock.id %>
+  <div class='td'><%= f.submit 'save', class: 'btn btn-primary form-control' %></div>
+  <div class='td'><%=  link_to 'delete', stock_path(stock), method: 'delete', class: 'btn btn-danger', data: { confirm: 'Are You Sure You Want To Delete This Stock?' } %></div>
+<% end %>

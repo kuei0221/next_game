@@ -1,0 +1,28 @@
+#stocks_table
+{
+    display:table;
+    border-collapse:separate;
+    border-spacing:2px;
+
+    .thead
+    {
+        display:table-header-group;
+        color:white;
+        font-weight:bold;
+        background-color:grey;
+    }
+    .tbody
+    {
+        display:table-row-group;
+    }
+    .tr
+    {
+        display:table-row;
+    }
+    .td
+    {
+        display:table-cell;
+        padding:1px;
+        padding-right: 10px;
+    }   
+}

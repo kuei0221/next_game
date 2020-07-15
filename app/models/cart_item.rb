@@ -6,7 +6,8 @@ class CartItem
 
   include Redis::Objects
   hash_key :detail
-
+  DETAILS = %i[stock_id game_id game_name owner_email price stock_quantity quantity]
+  
   attr_accessor :id, :stock_id, :user_id
 
   validates :detail, presence: true
@@ -21,18 +22,18 @@ class CartItem
 
     if detail.empty?
       detail[:stock_id] = stock_id
+      detail[:game_id] = stock.game.id
       detail[:game_name] = stock.game_name
       detail[:owner_email] = stock.user.email
       detail[:price] = stock.price
+      detail[:stock_quantity] = stock.quantity
     end
   end
 
-  def price
-    detail[:price].to_i
-  end
-
-  def quantity
-    detail[:quantity].to_i
+  DETAILS.each do |key|
+    define_method key do
+      key =~ /price|quantity/ ? detail[key].to_i : detail[key]
+    end
   end
 
   def quantity=(value)

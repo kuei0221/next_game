@@ -12,12 +12,12 @@
   <tbody>
     <% @current_cart.cart_items.each do |item| %>
       <tr>
-        <td><%= link_to item.stock.game_name, game_path(item.stock.game_id) %></td>
-        <td><%= item.stock.price %></td>
-        <td><%= item.stock.user.email %></td>
+        <td><%= link_to item.game_name, game_path(item.game_id) %></td>
+        <td><%= item.price %></td>
+        <td><%= item.owner_email %></td>
         <td>
           <%= form_tag change_cart_path(stock_id: item.stock_id), method:'patch', class: 'form-inline' do %>
-            <%= select_tag :quantity, options_for_select(1..item.stock.quantity, item.quantity), class: 'form-control mr-5' %>
+            <%= select_tag :quantity, options_for_select(1..item.stock_quantity, item.quantity), class: 'form-control mr-5' %>
             <%= submit_tag 'Update!', class: 'form-control btn btn-outline-primary' %>
           <% end %>
         </td>

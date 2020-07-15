@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class MyFailureApp < Devise::FailureApp
-  
   def respond
-    print 'my failure app is loaded'
     case request.format.symbol
     when :json
       json_failure

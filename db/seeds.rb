@@ -6,3 +6,16 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+require 'faker'
+
+User.create(email: 'michaelhwang0619@gmail.com', password: 'password', confirmed_at: Time.now)
+
+10.times do
+  user = User.create(email: Faker::Internet.unique.email, password: 'password', confirmed_at: Time.now)
+  user.stocks.create(
+      game_id: Faker::Number.within(range: 1..4),
+      price: Faker::Number.within(range: 500..1500),
+      quantity: Faker::Number.within(range: 1..10),
+      state: 1
+    )
+end

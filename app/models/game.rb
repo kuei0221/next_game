@@ -5,7 +5,7 @@ class Game < ApplicationRecord
   has_one_attached :cover
   has_many :stocks, -> { selling.order(price: :asc, updated_at: :desc) }
 
-  scope :search_by_name, ->(name) { where('name like ?', "%#{name}%") }
+  scope :search_by_name, ->(name) { where('name ilike ?', "%#{name}%") }
   scope :search_by_platform, ->(id) { where('platform_id': id) }
 
   def lowest_price

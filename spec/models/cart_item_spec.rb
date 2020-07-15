@@ -12,8 +12,10 @@ RSpec.describe CartItem, type: :model do
   let(:detail) do
     {
       'stock_id' => stock.id.to_s,
+      'stock_quantity' => stock.quantity.to_s,
       'price' => stock.price.to_s,
       'quantity' => quantity.to_s,
+      'game_id' => stock.game.id.to_s,
       'game_name' => stock.game.name,
       'owner_email' => stock.user.email
     }

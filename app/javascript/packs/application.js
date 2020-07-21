@@ -9,7 +9,6 @@ require("@rails/activestorage").start()
 require("channels")
 require('jquery')
 require('bootstrap')
-require('packs/buy_button_error')
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
@@ -20,3 +19,7 @@ require('packs/buy_button_error')
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+
+$(document).on('ajax:error', function(){
+  window.location = '/users/sign_in'
+})

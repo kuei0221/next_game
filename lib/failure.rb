@@ -14,7 +14,6 @@ class MyFailureApp < Devise::FailureApp
 
   def js_failure
     self.status = 401
-    self.content_type = 'application/js'
     flash.alert = 'You need to sign in or sign up before continuing.'
   end
 

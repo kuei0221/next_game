@@ -1,24 +1,27 @@
-# README
+# Next Game
+[![Build Status](https://travis-ci.org/kuei0221/next_game.svg?branch=master)](https://travis-ci.org/kuei0221/next_game)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a second-hand game selling webapp.
+Users are allow to trade their games at any price lower than original, and all the quote of the game will be shown in their pages.
 
-Things you may want to cover:
+Currently is not available to checkout (in progress)
 
-* Ruby version
+This project is not for any commerical usage.
 
-* System dependencies
+Now it is published [here.](https://next-game-bro.herokuapp.com/)
 
-* Configuration
+## Features:
+* User system with devise gem
+* Cart system with Redis.
+ 
+## Environment
+* Rails 6.0.3.2
+* Ruby 2.6.3
+  
+### Notice
+* Most service has required vertified account and its api key which is not shown here.
 
-* Database creation
+## Contact
+Created by Chien-Wei Huang (Michael)
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Email: michaelhwang0619@gmail.com

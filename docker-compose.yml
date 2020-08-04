@@ -1,0 +1,35 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+  redis:
+    image: redis:alpine
+  web:
+    image: kuei0221/next_game_app:latest
+    environment:
+       - RAILS_ENV=production
+       - RAKE_ENV=production
+       - NODE_ENV=production
+       - RAILS_SERVE_STATIC_FILES=true
+       - DATABASE_URL=postgres://postgres:password@db
+    volumes:
+      - /tmp/sockets:/app/tmp/sockets
+      - ./.env:/app/.env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - redis
+  nginx:
+    build: nginx
+    ports:
+     - "80:80"
+    volumes:
+      - /tmp/sockets:/app/tmp/sockets
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - web

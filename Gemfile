@@ -25,7 +25,7 @@ gem 'redis-objects'
 gem 'connection_pool'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-gem 'dotenv-rails', groups: [:development, :test]
+gem 'dotenv-rails'
 gem 'image_processing', '~> 1.2'
 gem "aws-sdk-s3", require: false
 

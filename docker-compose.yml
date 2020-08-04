@@ -16,6 +16,7 @@ services:
        - NODE_ENV=production
        - RAILS_SERVE_STATIC_FILES=true
        - DATABASE_URL=postgres://postgres:password@db
+       - REDIS_URL=redis://redis:6379
     volumes:
       - /tmp/sockets:/app/tmp/sockets
       - ./.env:/app/.env
@@ -25,7 +26,7 @@ services:
       - db
       - redis
   nginx:
-    build: nginx
+    image: nginx
     ports:
      - "80:80"
     volumes:

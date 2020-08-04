@@ -68,10 +68,14 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
-  config.action_mailer.delivery_method = :mailgun
-  config.action_mailer.mailgun_settings = {
-    api_key: ENV['MAILGUN_API_KEY'],
-    domain: ENV['MAILGUN_DOMAIN'],
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.sendgrid.net',
+    authentication: :plain,
+    domain: 'nextgame.ga',
+    password: credentials.dig(:smtp_password),
+    port: 587,
+    user_name: 'apikey',
+    enable_starttls_auto: true
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

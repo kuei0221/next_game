@@ -5,7 +5,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=password
     volumes:
-      - /tmp/db:/var/lib/postgresql/data
+      - ../shared/postgresql/data:/var/lib/postgresql/data
   redis:
     image: redis:alpine
   web:
@@ -19,8 +19,8 @@ services:
        - REDIS_URL=redis://redis:6379
     volumes:
       - /tmp/sockets:/app/tmp/sockets
-      - /.env:/app/.env
-      - ../shared/log/app:/log
+      - .env:/app/.env
+      - ../shared/app/log:/log
     ports:
       - "3000:3000"
     depends_on:
@@ -33,6 +33,6 @@ services:
     volumes:
       - /tmp/sockets:/app/tmp/sockets
       - /nginx.conf:/etc/nginx/conf.d/default.conf
-      - ../shared/log/nginx:/var/log/nginx
+      - ../shared/nginx/log:/var/log/nginx
     depends_on:
       - web

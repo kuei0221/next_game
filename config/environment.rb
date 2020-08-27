@@ -3,7 +3,7 @@
 # Load the Rails application.
 require_relative 'application'
 
-Rails.logger =  ActiveSupport::Logger.new("log/#{Rails.env}.log")
+Rails.logger =  ActiveSupport::Logger.new(Rails.root.join('log', "#{ Rails.env }.log") )
 
 # Initialize the Rails application.
 Rails.application.initialize!

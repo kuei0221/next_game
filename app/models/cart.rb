@@ -3,6 +3,7 @@
 class Cart
   include ActiveModel::Model
   include Redis::Objects
+  include Draper::Decoratable
   include CanGatherError
 
   redis_id_field :user_id

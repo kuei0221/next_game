@@ -95,7 +95,7 @@ class CartItem
   end
 
   def cannot_buy_user_own_stock
-    return true if stock && stock.user_id != user_id
+    return true if stock && !stock.is_users?(user_id)
 
     errors.add(:user_id, 'cannot buy your own stock !')
     false

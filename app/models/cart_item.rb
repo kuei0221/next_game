@@ -13,10 +13,10 @@ class CartItem
   validates :detail, presence: true
   validate :quantity_should_be_positive
   validate :cannot_buy_user_own_stock
-  validate :stock_should_be_latest
+  validate :stock_should_be_latest, on: :checkout
   
   attr_accessor :id, :stock_id, :user_id
-
+  
   def initialize(user_id, stock_id)
     @user_id = user_id
     @stock_id = stock_id
@@ -56,6 +56,16 @@ class CartItem
     redis_delete_objects
   end
 
+  def latest?
+    stock.price == price.value && stock.quantity >= quantity.value
+  end
+
+  def checkout
+    return false unless valid?(:checkout)
+
+    stock.reduce_quantity!(quantity.value)
+  end
+  
   private
 
   def detail_json
@@ -68,7 +78,7 @@ class CartItem
   end
 
   def stock_should_be_latest
-    return true if stock.reload && latest?
+    return true if stock && latest?
 
     errors.add(:stock, 'is outdated')
     false

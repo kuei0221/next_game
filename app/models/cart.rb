@@ -16,7 +16,7 @@ class Cart
   end
 
   def cart_items
-    @cart_items = items.map do |stock_id|
+    @cart_items ||= items.map do |stock_id|
       CartItem.new(user_id, stock_id)
     end
   end
@@ -55,11 +55,16 @@ class Cart
     items.present? ? cart_items.sum(&:total_price) : 0
   end
 
-  def clear_cart
+  def clear!
     cart_items.all?(&:clear) && items.clear
   end
 
-  def checkout
-    raise NotImplementedError
+  def checkout!
+    cart_items.reject(&:checkout).each { |item| gather_error!(item) }
+
+    raise CheckoutError if errors.any?
   end
+
+  class CheckoutError < StandardError; end
 end
+

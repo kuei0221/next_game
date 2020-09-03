@@ -1,0 +1,36 @@
+<%= render 'devise/shared/error_messages', resource: @form %>
+
+<table class="table my-3">
+  <thead>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Owner</th>
+    <th>Quantity</th>
+    <th>Total</th>
+    <th></th>
+  </thead>
+  <tbody>
+    <% @form.cart.cart_items.each do |item| %>
+      <tr>
+        <td><%= link_to item.game_name, game_path(item.game_id) %></td>
+        <% if item.errors? %>
+          <td><%= item.outdated %><td>
+        <% end %>
+        <td><%= item.price %></td>
+        <td><%= item.owner_email %></td>
+        <td><%= item.quantity %></td>
+        <td><%= item.total_price %></td>
+      </tr>
+    <% end %>
+    <tr class='bg-light'>
+      <td>Total</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><%= current_cart.total_price %></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<%= link_to 'Complete this Order', orders_path, method: :post, class: 'btn btn-lg btn-primary btn-block', data: { confirm: 'Order will be create after this check'} %>

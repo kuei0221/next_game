@@ -30,4 +30,22 @@ class CartItemDecorator < ApplicationDecorator
   def stock_quantity
     detail.fetch('stock_quantity')
   end
+
+  def to_order_item
+    OrderItem.new(
+      game_id: game_id,
+      user_id: user_id,
+      price: price,
+      quantity: quantity,
+      state: 'shipping'
+    )
+  end
+
+  def errors?
+    errors.full_messages.any?
+  end
+
+  def outdated
+    'This Stock has been refreshed, please remove and add the newer one'
+  end
 end

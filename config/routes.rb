@@ -13,5 +13,7 @@ Rails.application.routes.draw do
       delete :remove, path: 'remove'
     end
   end
+
+  resources :orders, only: %i[new create]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

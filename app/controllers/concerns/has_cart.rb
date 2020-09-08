@@ -9,7 +9,7 @@ module HasCart
     private
 
     def current_cart
-      @current_cart ||= Cart.new(current_user.id)
+      @current_cart ||= Cart.new(current_user.id).decorate
     end
   end
 end

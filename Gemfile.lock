@@ -44,6 +44,10 @@ GEM
       globalid (>= 0.3.6)
     activemodel (6.0.3.2)
       activesupport (= 6.0.3.2)
+    activemodel-serializers-xml (1.0.2)
+      activemodel (> 5.x)
+      activesupport (> 5.x)
+      builder (~> 3.1)
     activerecord (6.0.3.2)
       activemodel (= 6.0.3.2)
       activesupport (= 6.0.3.2)
@@ -115,6 +119,12 @@ GEM
     dotenv-rails (2.7.5)
       dotenv (= 2.7.5)
       railties (>= 3.2, < 6.1)
+    draper (4.0.1)
+      actionpack (>= 5.0)
+      activemodel (>= 5.0)
+      activemodel-serializers-xml (>= 1.0)
+      activesupport (>= 5.0)
+      request_store (>= 1.0)
     erubi (1.9.0)
     execjs (2.7.0)
     factory_bot (5.1.0)
@@ -238,6 +248,8 @@ GEM
     redis-objects (1.5.0)
       redis (~> 4.0)
     regexp_parser (1.7.0)
+    request_store (1.5.0)
+      rack (>= 1.4)
     responders (3.0.0)
       actionpack (>= 5.0)
       railties (>= 5.0)
@@ -348,6 +360,7 @@ DEPENDENCIES
   connection_pool
   devise
   dotenv-rails
+  draper
   factory_bot_rails
   faker
   guard-rspec

@@ -3,7 +3,7 @@
   <td><%= stock.quantity %></td>
   <td><%= stock.user.email %></td>
   <td>
-    <% unless stock.is_users?(current_user.id) %>
+    <% unless stock.is_users?(cart_user_id) %>
       <%= form_tag add_cart_path(params: {stock_id: stock.id}), method: 'post', remote: true, class:'form-inline' do %>
         <%= select_tag :quantity, options_for_select(1..stock.quantity), { class: 'form-control mr-5' } %>
         <%= submit_tag 'add!', class: 'btn btn-outline-success form-control'%>

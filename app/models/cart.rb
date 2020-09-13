@@ -8,46 +8,48 @@ class Cart
 
   redis_id_field :user_id
   set :items
+  value :uuid
 
   attr_accessor :user_id
 
   def initialize(user_id)
     @user_id = user_id
+
+    if self.uuid.nil?
+      self.uuid = SecureRandom.uuid
+    end
   end
 
   def cart_items
     @cart_items ||= items.map do |stock_id|
-      CartItem.new(user_id, stock_id)
+      CartItem.new(self.uuid.value, stock_id)
     end
   end
 
   def add_item(stock_id, quantity)
-    item = CartItem.new(user_id, stock_id)
-    return false unless child_valid?(item)
+    return false unless init_item(stock_id)
 
     if items.member?(stock_id.to_s)
-      item.increment(quantity)
+      @item.increment(quantity)
     else
-      item.quantity = quantity
+      @item.quantity = quantity
       items << stock_id
     end
   end
 
   def change_item(stock_id, quantity)
-    item = CartItem.new(user_id, stock_id)
-    return false unless child_valid?(item)
+    return false unless init_item(stock_id)
 
     if items.member?(stock_id.to_s)
-      item.quantity = quantity
+      @item.quantity = quantity
     end
   end
 
   def remove_item(stock_id)
-    item = CartItem.new(user_id, stock_id)
-    return false unless child_valid?(item)
+    return false unless init_item(stock_id)
 
     if items.member?(stock_id.to_s)
-      items.delete(stock_id.to_s) && item.clear
+      items.delete(stock_id.to_s) && @item.clear
     end
   end
 
@@ -63,6 +65,21 @@ class Cart
     cart_items.reject(&:checkout).each { |item| gather_error!(item) }
 
     raise CheckoutError if errors.any?
+  end
+
+  def register!(new_user_id)
+    @user_id = new_user_id
+
+    [:items, :uuid].all? do |field|
+      send(field).rename("cart:#{new_user_id}:#{field}")
+    end
+  end
+
+  private
+
+  def init_item(stock_id)
+    @item = CartItem.new(uuid.value, stock_id)
+    child_valid?(@item) ? @item : false
   end
 
   class CheckoutError < StandardError; end

@@ -12,15 +12,13 @@ class CartItem
   
   validates :detail, presence: true
   validate :quantity_should_be_positive
-  validate :cannot_buy_user_own_stock
   validate :stock_should_be_latest, on: :checkout
   
-  attr_accessor :id, :stock_id, :user_id
+  attr_reader :id, :stock_id
   
-  def initialize(user_id, stock_id)
-    @user_id = user_id
+  def initialize(cart_id, stock_id)
     @stock_id = stock_id
-    @id = "#{user_id}:#{stock_id}"
+    @id = "#{cart_id}:#{stock_id}"
     
     if self.detail.nil?
       self.detail = detail_json
@@ -65,7 +63,8 @@ class CartItem
 
     stock.reduce_quantity!(quantity.value)
   end
-  
+
+
   private
 
   def detail_json
@@ -73,6 +72,7 @@ class CartItem
       game_id: stock.game_id,
       game_name: stock.game_name,
       owner_email: stock.user.email,
+      owner_id: stock.user.id,
       stock_quantity: stock.quantity
     }.to_json
   end
@@ -91,13 +91,6 @@ class CartItem
     return true unless quantity.value.negative?
 
     errors.add(:quantity, 'cannot be negative')
-    false
-  end
-
-  def cannot_buy_user_own_stock
-    return true if stock && !stock.is_users?(user_id)
-
-    errors.add(:user_id, 'cannot buy your own stock !')
     false
   end
 

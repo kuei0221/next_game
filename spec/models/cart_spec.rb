@@ -147,4 +147,23 @@ RSpec.describe Cart do
       end
     end
   end
+
+  describe '#register!' do
+    let(:cart) { described_class.new('test_session_cart_id') }
+    before do
+      allow(cart.items).to receive(:rename).and_return(true)
+      allow(cart.uuid).to receive(:rename).and_return(true)
+    end
+
+    subject { cart.register!(user.id) }
+
+    it 'should change user_id' do
+      expect { subject }.to change { cart.user_id }.from('test_session_cart_id').to(user.id)
+    end
+    it 'should rename redis key of items and uuid' do
+      subject
+      expect(cart.items).to have_received(:rename).with("cart:#{user.id}:items")
+      expect(cart.uuid).to have_received(:rename).with("cart:#{user.id}:uuid")
+    end
+  end
 end

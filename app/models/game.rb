@@ -13,7 +13,7 @@ class Game < ApplicationRecord
   end
 
   def best_available_stock(user_id)
-    stocks.not_own_by_current_user(user_id).first
+    stocks.not_own_by_current_user(user_id.to_i).first
   end
 
   def total_quantity

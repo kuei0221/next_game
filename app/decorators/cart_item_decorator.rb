@@ -27,6 +27,10 @@ class CartItemDecorator < ApplicationDecorator
     detail.fetch('owner_email')
   end
 
+  def owner_id
+    detail.fetch('owner_id')
+  end
+
   def stock_quantity
     detail.fetch('stock_quantity')
   end
@@ -34,7 +38,7 @@ class CartItemDecorator < ApplicationDecorator
   def to_order_item
     OrderItem.new(
       game_id: game_id,
-      user_id: user_id,
+      user_id: owner_id,
       price: price,
       quantity: quantity,
       state: 'shipping'

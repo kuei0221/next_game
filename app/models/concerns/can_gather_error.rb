@@ -5,9 +5,9 @@ module CanGatherError
 
   included do
     def gather_error!(object)
-      return self.errors if object.errors.blank?
+      return errors if object.errors.blank?
 
-      self.errors.merge!(object.errors)
+      errors.merge!(object.errors)
     end
 
     def child_valid?(object)

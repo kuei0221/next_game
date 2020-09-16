@@ -5,39 +5,35 @@ class CartItem
   include ActiveModel::Validations
   include Redis::Objects
   include Draper::Decoratable
-  
+
   counter :price
   counter :quantity
   value :detail
-  
+
   validates :detail, presence: true
   validate :quantity_should_be_positive
   validate :stock_should_be_latest, on: :checkout
-  
+
   attr_reader :id, :stock_id
-  
+
   def initialize(cart_id, stock_id)
     @stock_id = stock_id
     @id = "#{cart_id}:#{stock_id}"
-    
-    if self.detail.nil?
-      self.detail = detail_json
-      self.price.value = stock.price
-    end
+
+    return unless detail.nil?
+
+    self.detail = detail_json
+    price.value = stock.price
   end
 
   def quantity=(value)
-    if stock.quantity < value.to_i || value.to_i.negative?
-      raise InvalidQuantity
-    end
+    raise InvalidQuantity if stock.quantity < value.to_i || value.to_i.negative?
 
-    self.quantity.value = value
+    quantity.value = value
   end
 
   def increment(value)
-    if value.to_i.negative?
-      raise InvalidQuantity
-    end
+    raise InvalidQuantity if value.to_i.negative?
 
     self.quantity += value.to_i
   end
@@ -64,7 +60,6 @@ class CartItem
     stock.reduce_quantity!(quantity.value)
   end
 
-
   private
 
   def detail_json
@@ -82,7 +77,7 @@ class CartItem
 
     errors.add(:stock, 'is outdated')
     false
-  rescue ActiveRecord::RecordNotFound => e
+  rescue ActiveRecord::RecordNotFound
     errors.add(:stock, 'record has removed')
     false
   end

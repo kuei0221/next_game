@@ -7,7 +7,7 @@ RSpec.describe OrderForm do
   let!(:sellers) { create_list(:user, 2) }
   let!(:stock1) { create(:stock, user: sellers[0], quantity: 5) }
   let!(:stock2) { create(:stock, user: sellers[1], quantity: 3) }
-  let!(:cart) { Cart.new(buyer.id) }
+  let(:cart) { Cart.new(buyer.id) }
   let(:form) { described_class.new(buyer.id) }
   
   before(:each) { Redis.new.flushdb }
@@ -23,11 +23,23 @@ RSpec.describe OrderForm do
     subject { form.save }
 
     context 'when success' do
+      let(:order) { { buyer_id: buyer.id, price: (stock1.price * 2 + stock2.price * 1) }.with_indifferent_access }
+      let(:order_item1) { { game_id: stock1.game_id, user_id: sellers[0].id, price: stock1.price, quantity: 2, state: 'shipping' }.with_indifferent_access }
+      let(:order_item2) { { game_id: stock2.game_id, user_id: sellers[1].id, price: stock2.price, quantity: 1, state: 'shipping' }.with_indifferent_access }
+
       it 'create order, order item and reduce stock quantity' do
         expect { subject }.to change { Order.count }.from(0).to(1).and \
           change { OrderItem.count }.from(0).to(2).and \
             change { Stock.first.quantity }.from(5).to(3).and\
               change { Stock.second.quantity }.from(3).to(2)
+      end
+
+
+      it 'should create correct order and order item' do
+        subject
+        expect(form.order.attributes).to be > order
+        expect(form.order.items.first.attributes).to be > order_item1 
+        expect(form.order.items.second.attributes).to be > order_item2 
       end
   
       it 'clear cart and cart item' do

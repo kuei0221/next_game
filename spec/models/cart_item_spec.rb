@@ -13,6 +13,7 @@ RSpec.describe CartItem, type: :model do
       game_id: stock.game_id,
       game_name: stock.game_name,
       owner_email: stock.user.email,
+      owner_id: stock.user.id,
       stock_quantity: stock.quantity
     }.to_json
   end
@@ -174,14 +175,5 @@ RSpec.describe CartItem, type: :model do
       before { item.quantity.value = -10 }
       it { is_expected.to be_falsey }
     end
-  end
-  
-
-  describe "#cannot_buy_user_own_stock" do
-    subject { item.send(:cannot_buy_user_own_stock) }
-
-    before { stock.update(user_id: user.id) }
-
-    it { is_expected.to be_falsey }
   end
 end

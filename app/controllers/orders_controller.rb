@@ -2,6 +2,9 @@
 
 class OrdersController < ApplicationController
   include HasCart
+
+  before_action :authenticate_user!
+  before_action :is_cart_any_item?
   
   def new
     @form = OrderForm.new(current_user.id)
@@ -17,6 +20,15 @@ class OrdersController < ApplicationController
       flash.now.alert = "Order cannot create !"
       render 'new'
     end
+  end
+
+  private
+
+  def is_cart_any_item?
+    return true if current_cart.items.any?
+
+    flash.alert = 'Your Cart is empty!'
+    redirect_to cart_path
   end
 
 end

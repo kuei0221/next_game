@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   root to: 'games#index'
-  devise_for :users, controllers: { sessions: 'users/sessions' }
+  devise_for :users, controllers: { confirmations: 'users/confirmations', }
 
   resources :games, only: %i[show index]
   resources :stocks, only: %i[index show create update destroy]

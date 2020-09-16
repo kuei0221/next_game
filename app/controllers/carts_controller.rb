@@ -2,25 +2,17 @@
 
 class CartsController < ApplicationController
   include HasCart
-  before_action :authenticate_user!
-  before_action :current_cart
-
+  
   rescue_from CartItem::InvalidQuantity, with: :invalid_quantity_input
+  rescue_from CartAddOperator::NoStockExistError, with: :no_stock_for_game
+  rescue_from CartAddOperator::InvalidInput, with: :invalid_params_input
 
   def add
-    if cart_params[:game_id]
-      game = Game.find_by(id: cart_params[:game_id])
-      stock_id = game.best_available_stock(current_user.id)&.id
-      quantity = 1
-    elsif cart_params[:stock_id]
-      stock_id = cart_params[:stock_id]
-      quantity = cart_params[:quantity]
-    else
-      flash.alert = 'Unrecognized Input, please check it Again'
-      redirect_to root_path
-    end
 
-    if current_cart.add_item(stock_id, quantity)
+    params = cart_params.merge(cart_user_id: cart_user_id).to_h.symbolize_keys
+    operator = CartAddOperator.new(params)
+
+    if operator.perform
       flash.now.notice = 'Add To My Cart!'
     else
       flash.now.alert = 'Fail to add to My Cart'
@@ -59,6 +51,16 @@ class CartsController < ApplicationController
 
   def invalid_quantity_input
     flash.alert = 'Oops! The seller does not have that much stock!'
+    redirect_back(fallback_location: root_path)
+  end
+
+  def no_stock_for_game
+    flash.alert = 'This Game does not have any Stock yet!'
+    redirect_back(fallback_location: root_path)
+  end
+
+  def invalid_params_input
+    flash.alert = 'You Are Not Buying Anything! Please Make Sure You Are On The Right Page.'
     redirect_back(fallback_location: root_path)
   end
 

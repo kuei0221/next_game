@@ -20,34 +20,33 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
+gem 'connection_pool'
 gem 'redis', '~> 4.0'
 gem 'redis-objects'
-gem 'connection_pool'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+gem 'aws-sdk-s3', require: false
 gem 'dotenv-rails'
-gem 'image_processing', '~> 1.2'
-gem "aws-sdk-s3", require: false
 gem 'draper'
+gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
+gem 'aasm'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bootstrap', '~> 4.5.0'
 gem 'devise'
-gem 'aasm'
-gem 'mailgun-ruby'
-gem 'seed-fu'
 gem 'faker'
+gem 'mailgun-ruby'
 gem 'rack-attack'
+gem 'seed-fu'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
-  gem 'rspec-rails', '>= 4.0.0'
-  gem 'rails-controller-testing'
-  gem 'simplecov', require: false
   gem 'guard-rspec', require: false
+  gem 'rails-controller-testing'
+  gem 'rspec-rails', '>= 4.0.0'
   gem 'shoulda'
 end
 
@@ -65,6 +64,9 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
+  gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
+  gem 'simplecov', require: false
   gem 'webdrivers'
 end
 

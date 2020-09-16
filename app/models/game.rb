@@ -3,7 +3,7 @@
 class Game < ApplicationRecord
   belongs_to :platform
   has_one_attached :cover
-  has_many :stocks, -> { selling.order(price: :asc, updated_at: :desc) }
+  has_many :stocks, -> { selling.order(price: :asc, updated_at: :desc) }, inverse_of: :game
 
   scope :search_by_name, ->(name) { where('name ilike ?', "%#{name}%") }
   scope :search_by_platform, ->(id) { where('platform_id': id) }

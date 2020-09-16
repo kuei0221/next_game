@@ -10,14 +10,18 @@ RSpec.describe StockForm do
     subject { described_class.new(params) }
 
     context 'when create new stock' do
-      let(:params) { { game_id: game.id, price: 1000, quantity: 1, user_id: user.id } }
+      let(:params) do
+        { game_id: game.id, price: 1000, quantity: 1, user_id: user.id }
+      end
       it { is_expected.to be_valid }
       it { expect(subject.stock_id).to eq nil }
     end
 
     context 'when update exist stock' do
       let!(:stock) { create(:stock, id: 1, game_id: game.id, user_id: user.id) }
-      let(:params) { {stock_id: 1, price: 500, quantity: 10, user_id: user_id, state: 1 } }
+      let(:params) do
+        { stock_id: 1, price: 500, quantity: 10, user_id: user_id, state: 1 }
+      end
       let(:user_id) { user.id }
 
       it { is_expected.to be_valid }
@@ -46,11 +50,15 @@ RSpec.describe StockForm do
       end
 
       context 'when user already have the stock of the game' do
-        let!(:stock) { create(:stock, game_id: game_id, user_id: user.id, price: price, quantity: quantity) }
+        let!(:stock) do
+          create(:stock, game_id: game_id, user_id: user.id, price: price, quantity: quantity)
+        end
         it { is_expected.to be_falsey }
         it 'should have child error message' do
           subject
-          expect(form.errors.full_messages).to include 'User already has the stock of this game'
+          expect(form.errors.full_messages).to include(
+            'User already has the stock of this game'
+          )
         end
       end
 
@@ -74,17 +82,23 @@ RSpec.describe StockForm do
         it { is_expected.to be_falsey }
         it 'should have error message' do
           subject
-          expect(form.errors.full_messages).to include 'Price cannot greater than game price'
+          expect(form.errors.full_messages).to include(
+            'Price cannot greater than game price'
+          )
         end
       end
     end
 
     context 'when update exist stock' do
-      let!(:stock) { create(:stock, id: 1, game_id: game.id, price: 1000, user_id: user.id, quantity: 1, state: 0) }
-      let(:form) { described_class.new(params) }
-      let(:params) { { price: stock_price, quantity: 10, state: 1, stock_id: stock_id, user_id: user.id } }
+      let!(:stock) do
+        create(:stock, :pending, id: 1, game: game, user: user, price: 1000, quantity: 1)
+      end
+      let(:params) do
+        { price: stock_price, quantity: 10, state: 1, stock_id: stock_id, user_id: user.id }
+      end
       let(:stock_id) { 1 }
       let(:stock_price) { 500 }
+      let(:form) { described_class.new(params) }
 
       context 'with correct data' do
         it 'should change stock' do

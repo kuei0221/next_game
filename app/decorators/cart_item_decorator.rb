@@ -2,7 +2,7 @@
 
 class CartItemDecorator < ApplicationDecorator
   delegate_all
-  
+
   def quantity
     object.quantity.value
   end

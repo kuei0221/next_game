@@ -1,5 +1,9 @@
+
+<h2 class='py-5'>Checkout</h2>
+
 <%= render 'devise/shared/error_messages', resource: @form %>
 
+<h4 class='py-3 text-muted'>My Cart</h4>
 <table class="table my-3">
   <thead>
     <th>Name</th>
@@ -32,5 +36,9 @@
     </tr>
   </tbody>
 </table>
+
+<h4 class='py-3 text-muted'>Billing Address</h4>
+<h4 class='py-3 text-muted'>Payment</h4>
+
 
 <%= link_to 'Complete this Order', orders_path, method: :post, class: 'btn btn-lg btn-primary btn-block', data: { confirm: 'Order will be create after this check'} %>

@@ -2,13 +2,14 @@
 
 class StocksController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_stocks, except: :show
+  before_action :set_stocks, except: %i[show create]
   before_action :set_stock_form, only: %i[index destroy]
 
   def create
     @form = StockForm.new(stock_params)
     if @form.save
-      flash.now.notice = 'Create Success'
+      flash.now.notice =
+        'Games are now stored in stocking list in pending statue. Please active it to be on sell!'
     else
       flash.now.alert = 'Create Fail'
     end
@@ -57,6 +58,8 @@ class StocksController < ApplicationController
   end
 
   def stock_params
-    params.require(:stock).permit(:stock_id, :game_id, :price, :quantity, :state).merge(user_id: current_user.id)
+    params.require(:stock)
+          .permit(:stock_id, :game_id, :price, :quantity, :state)
+          .merge(user_id: current_user.id)
   end
 end

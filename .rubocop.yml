@@ -1,0 +1,30 @@
+require:
+  - rubocop-rails
+
+AllCops:
+  Exclude:
+    - db/schema.rb
+    - node_modules/**/**
+    - bin/**
+Metrics/BlockLength:
+  Exclude: 
+    - spec/**/*.rb
+    - Guardfile
+    - config/environments/*.rb
+
+Layout/LineLength:
+  Max: 100
+  IgnoredPatterns: ['(\A|\s)#']
+  Exclude:
+    - db/migrate/*.rb
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/AbcSize:
+  Exclude:
+    - db/migrate/*.rb
+
+Metrics/MethodLength:
+  Exclude:
+    - db/migrate/*.rb

@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :platform do
     sequence(:id)
-    sequence(:name) { |n| "platform_#{n}"}
+    sequence(:name) { |n| "platform_#{n}" }
 
     trait :ps4 do
       id { 1 }

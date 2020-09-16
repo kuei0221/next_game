@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Cart do
-
   let(:cart) { described_class.new(user.id) }
   let!(:user) { create(:user, id: 1) }
   let!(:stock) { create(:stock, quantity: stock_quantity) }
@@ -41,7 +40,8 @@ RSpec.describe Cart do
 
     context 'when item is not in cart' do
       it 'add stock_id in items' do
-        expect { subject }.to change { cart.items.value }.from([]).to([stock.id.to_s])
+        expect { subject }.to change { cart.items.value }
+          .from([]).to([stock.id.to_s])
       end
       it 'assign quantity to item' do
         subject
@@ -121,10 +121,10 @@ RSpec.describe Cart do
 
   describe '#checkout!' do
     subject { cart.checkout! }
-    
+
     let(:stock_1) { create(:stock, price: 1000) }
     let(:stock_2) { create(:stock, price: 1500) }
-    
+
     before do
       cart.add_item(stock_1.id, 3)
       cart.add_item(stock_2.id, 2)
@@ -134,14 +134,14 @@ RSpec.describe Cart do
       before { allow(item).to receive(:checkout).and_return(true) }
       it { is_expected.to be_nil }
     end
-    
+
     context 'when checkout fail' do
       before do
         allow(item).to receive(:checkout).and_return(false)
         allow(cart).to receive(:gather_error!)
         allow(cart.errors).to receive(:any?).and_return true
       end
-      
+
       it do
         expect { subject }.to raise_error Cart::CheckoutError
       end

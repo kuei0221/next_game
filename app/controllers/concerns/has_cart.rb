@@ -10,18 +10,12 @@ module HasCart
 
     def set_cart_user_id
       id = nil
-      
-      if current_user
-        id ||= current_user.id
-      end
 
-      if session[:cart_id]
-        id ||= session[:cart_id]
-      end
+      id ||= current_user.id if current_user
 
-      unless id
-        id = session[:cart_id] = SecureRandom.base64
-      end
+      id ||= session[:cart_id] if session[:cart_id]
+
+      id ||= session[:cart_id] = SecureRandom.base64
 
       id
     end

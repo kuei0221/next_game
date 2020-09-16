@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class OrderForm
-
   include ActiveModel::Model
 
   attr_accessor :user_id, :cart, :order
@@ -10,31 +9,36 @@ class OrderForm
   def initialize(user_id)
     @user_id = user_id
     @cart = Cart.new(user_id).decorate
+    @order = init_order
   end
 
   def save
-    ActiveRecord::Base.transaction do
-      @order = Order.new(
-        buyer_id: user_id,
-        price: cart.total_price
-      )
-      lock_stocks
-      cart.checkout!
-      @order.items = cart.cart_items.map(&:to_order_item)
-      @order.save!
-      cart.clear!
+    begin
+      ActiveRecord::Base.transaction do
+        lock_stocks!
+        cart.checkout!
+        @order.items = cart.to_order_items
+        @order.save!
+        cart.clear!
+      end
+    rescue Cart::CheckoutError => e
+      errors.add(:cart, e.message)
+    rescue ActiveRecord::RecordInvalid => e
+      errors.add(:order, e.message)
     end
-  rescue Cart::CheckoutError => e
-    errors.add(:cart, e.message)
-  rescue ActiveRecord::RecordInvalid => e
-    errors.add(:order, e.message)
-  ensure
-    return errors.blank?
+    errors.blank?
   end
 
   private
+  
+  def init_order
+    Order.new(
+      buyer_id: user_id,
+      price: cart.total_price
+    )
+  end
 
-  def lock_stocks
+  def lock_stocks!
     stock_ids = cart.items.value
     Stock.where(id: stock_ids).lock!
   end

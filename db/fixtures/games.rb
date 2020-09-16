@@ -1,16 +1,16 @@
+# frozen_string_literal: true
+
 require 'csv'
 
-csv = CSV.open("#{Rails.root.join('master', 'games.csv')}", headers: true)
+csv = CSV.open(Rails.root.join('master/games.csv').to_s, headers: true)
 
 def find_platform_id(name)
-    id = case name
-    when /PS4/
-        1
-    when /Nswitch|NS/
-        2
-    else
-        nil
-    end
+  case name
+  when /PS4/
+    1
+  when /Nswitch|NS/
+    2
+  end
 end
 
 def cover_google_file(id, name)

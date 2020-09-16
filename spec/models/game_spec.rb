@@ -2,15 +2,14 @@
 
 require 'rails_helper'
 
-RSpec.describe Game ,type: :model do
-
+RSpec.describe Game, type: :model do
   describe '#stocks' do
     subject { game.stocks }
     let!(:game) { create(:game) }
-    let!(:stock_1) { create(:stock, :selling, game: game, id: 1, price: 100, updated_at: 10.days.ago) }
-    let!(:stock_2) { create(:stock, :selling, game: game, id: 2, price: 200, updated_at: 10.days.ago) }
-    let!(:stock_3) { create(:stock, :selling, game: game, id: 3, price: 200, updated_at: 5.days.ago) }
-    let!(:stock_4) { create(:stock, :pending, game: game, id: 4, price: 300, updated_at: 1.days.ago) }
+    let!(:stock_1) { create(:stock, :selling, game: game, price: 100, updated_at: 10.days.ago) }
+    let!(:stock_2) { create(:stock, :selling, game: game, price: 200, updated_at: 10.days.ago) }
+    let!(:stock_3) { create(:stock, :selling, game: game, price: 200, updated_at: 5.days.ago) }
+    let!(:stock_4) { create(:stock, :pending, game: game, price: 300, updated_at: 1.day.ago) }
     it 'only show stocks which is selling ' do
       expect(subject).not_to include stock_4
     end
@@ -69,9 +68,13 @@ RSpec.describe Game ,type: :model do
 
     let!(:user) { create(:user) }
     let!(:game) { create(:game) }
-    let!(:user_stock) { create(:stock, :selling, game: game, user: user, price: 100 ) }
+    let!(:user_stock) do
+      create(:stock, :selling, game: game, user: user, price: 100)
+    end
     let!(:pending_stock) { create(:stock, :pending, game: game, price: 200) }
-    let!(:best_available_stock) { create(:stock, :selling, game: game, price: 1000) }
+    let!(:best_available_stock) do
+      create(:stock, :selling, game: game, price: 1000)
+    end
     let!(:other_stock) { create(:stock, :selling, game: game, price: 1500) }
 
     it 'return stock with lowest price and not own by user' do

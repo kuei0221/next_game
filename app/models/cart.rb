@@ -15,14 +15,12 @@ class Cart
   def initialize(user_id)
     @user_id = user_id
 
-    if self.uuid.nil?
-      self.uuid = SecureRandom.uuid
-    end
+    self.uuid = SecureRandom.uuid if uuid.nil?
   end
 
   def cart_items
     @cart_items ||= items.map do |stock_id|
-      CartItem.new(self.uuid.value, stock_id)
+      CartItem.new(uuid.value, stock_id)
     end
   end
 
@@ -40,17 +38,13 @@ class Cart
   def change_item(stock_id, quantity)
     return false unless init_item(stock_id)
 
-    if items.member?(stock_id.to_s)
-      @item.quantity = quantity
-    end
+    @item.quantity = quantity if items.member?(stock_id.to_s)
   end
 
   def remove_item(stock_id)
     return false unless init_item(stock_id)
 
-    if items.member?(stock_id.to_s)
-      items.delete(stock_id.to_s) && @item.clear
-    end
+    items.delete(stock_id.to_s) && @item.clear if items.member?(stock_id.to_s)
   end
 
   def total_price
@@ -70,7 +64,7 @@ class Cart
   def register!(new_user_id)
     @user_id = new_user_id
 
-    [:items, :uuid].all? do |field|
+    %i[items uuid].all? do |field|
       send(field).rename("cart:#{new_user_id}:#{field}")
     end
   end
@@ -84,4 +78,3 @@ class Cart
 
   class CheckoutError < StandardError; end
 end
-

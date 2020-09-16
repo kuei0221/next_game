@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeProductColumnOrderUuidToOrderId < ActiveRecord::Migration[6.0]
   def change
     rename_column :products, :order_uuid, :order_id

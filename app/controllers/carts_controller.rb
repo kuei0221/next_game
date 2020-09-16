@@ -2,15 +2,13 @@
 
 class CartsController < ApplicationController
   include HasCart
-  
+
   rescue_from CartItem::InvalidQuantity, with: :invalid_quantity_input
   rescue_from CartAddOperator::NoStockExistError, with: :no_stock_for_game
   rescue_from CartAddOperator::InvalidInput, with: :invalid_params_input
 
   def add
-
-    params = cart_params.merge(cart_user_id: cart_user_id).to_h.symbolize_keys
-    operator = CartAddOperator.new(params)
+    operator = CartAddOperator.new(cart_add_params)
 
     if operator.perform
       flash.now.notice = 'Add To My Cart!'
@@ -66,5 +64,9 @@ class CartsController < ApplicationController
 
   def cart_params
     params.permit(:stock_id, :game_id, :quantity)
+  end
+
+  def cart_add_params
+    cart_params.merge(cart_user_id: cart_user_id).to_h.symbolize_keys
   end
 end

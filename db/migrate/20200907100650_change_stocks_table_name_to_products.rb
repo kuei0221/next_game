@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class ChangeStocksTableNameToProducts < ActiveRecord::Migration[6.0]
   def up
-    remove_index :stocks, [:user_id, :game_id]
+    remove_index :stocks, %i[user_id game_id]
     remove_foreign_key :stocks, :games
     remove_foreign_key :stocks, :users
     rename_table :stocks, :products
@@ -14,6 +16,6 @@ class ChangeStocksTableNameToProducts < ActiveRecord::Migration[6.0]
     rename_table :products, :stocks
     add_foreign_key :stocks, :games
     add_foreign_key :stocks, :users
-    add_index :stocks, [:user_id, :game_id], unique: true
+    add_index :stocks, %i[user_id game_id], unique: true
   end
 end

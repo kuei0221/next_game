@@ -44,6 +44,10 @@ GEM
       globalid (>= 0.3.6)
     activemodel (6.0.3.2)
       activesupport (= 6.0.3.2)
+    activemodel-serializers-xml (1.0.2)
+      activemodel (> 5.x)
+      activesupport (> 5.x)
+      builder (~> 3.1)
     activerecord (6.0.3.2)
       activemodel (= 6.0.3.2)
       activesupport (= 6.0.3.2)
@@ -115,6 +119,12 @@ GEM
     dotenv-rails (2.7.5)
       dotenv (= 2.7.5)
       railties (>= 3.2, < 6.1)
+    draper (4.0.1)
+      actionpack (>= 5.0)
+      activemodel (>= 5.0)
+      activemodel-serializers-xml (>= 1.0)
+      activesupport (>= 5.0)
+      request_store (>= 1.0)
     erubi (1.9.0)
     execjs (2.7.0)
     factory_bot (5.1.0)
@@ -194,6 +204,8 @@ GEM
     puma (4.3.5)
       nio4r (~> 2.0)
     rack (2.2.3)
+    rack-attack (6.3.1)
+      rack (>= 1.0, < 3)
     rack-proxy (0.6.5)
       rack
     rack-test (1.1.0)
@@ -236,6 +248,8 @@ GEM
     redis-objects (1.5.0)
       redis (~> 4.0)
     regexp_parser (1.7.0)
+    request_store (1.5.0)
+      rack (>= 1.4)
     responders (3.0.0)
       actionpack (>= 5.0)
       railties (>= 5.0)
@@ -285,6 +299,12 @@ GEM
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
     shellany (0.0.1)
+    shoulda (4.0.0)
+      shoulda-context (~> 2.0)
+      shoulda-matchers (~> 4.0)
+    shoulda-context (2.0.0)
+    shoulda-matchers (4.4.1)
+      activesupport (>= 4.2.0)
     simplecov (0.18.5)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -346,6 +366,7 @@ DEPENDENCIES
   connection_pool
   devise
   dotenv-rails
+  draper
   factory_bot_rails
   faker
   guard-rspec
@@ -355,6 +376,7 @@ DEPENDENCIES
   mailgun-ruby
   pg
   puma (~> 4.1)
+  rack-attack
   rails (~> 6.0.1)
   rails-controller-testing
   redis (~> 4.0)
@@ -363,6 +385,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   seed-fu
   selenium-webdriver
+  shoulda
   simplecov
   spring
   spring-watcher-listen (~> 2.0.0)

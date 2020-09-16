@@ -3,7 +3,7 @@
   <div class='td'><%= stock.game_price %></div>
   <div class='td'><%= f.text_field :price, value: stock.price, class: 'form-control' %></div>
   <div class='td'><%= f.text_field :quantity, value: stock.quantity, class: 'form-control' %></div>
-  <div class='td'><%= f.select :state, Stock.states.keys, { selected: stock.state }, class: 'form-control'%></div>
+  <div class='td'><%= f.select :state, [:pending, :selling], { selected: stock.state }, class: 'form-control'%></div>
   <%= f.hidden_field :stock_id, value: stock.id %>
   <div class='td'><%= f.submit 'save', class: 'btn btn-primary form-control' %></div>
   <div class='td'><%=  link_to 'delete', stock_path(stock), method: 'delete', class: 'btn btn-danger', data: { confirm: 'Are You Sure You Want To Delete This Stock?' } %></div>

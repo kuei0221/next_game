@@ -18,4 +18,4 @@ ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
 # Start the main process.
-CMD bundle exec rake assets:precompile && bundle exec puma -C config/puma.rb
+CMD bundle exec rake assets:precompile && bundle exec rails s 

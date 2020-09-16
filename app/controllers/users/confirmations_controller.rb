@@ -12,9 +12,17 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   # end
 
   # GET /resource/confirmation?confirmation_token=abcdef
-  # def show
-  #   super
-  # end
+  def show
+    super
+    if @user.errors.empty? && session[:cart_id]
+        Cart.new(session[:cart_id]).register!(@user.id)
+      rescue Redis::CommandError => e
+        flash.alert = 'Cart has expired!'
+      ensure
+        session[:cart_id] = nil
+      end
+    end
+  end
 
   # protected
 

@@ -1,27 +1,22 @@
 # frozen_string_literal: true
 
-class Stock < ApplicationRecord
-  include AASM
-
-  belongs_to :game, dependent: :destroy
-  belongs_to :user, dependent: :destroy
+class Stock < Product
+  
   scope :not_own_by_current_user, ->(user_id) { where.not(user_id: user_id) }
+  
+  validates_uniqueness_of :user_id, scope: :game_id, message: 'already has the stock of this game'
+  
+  attribute :state, default: :pending
 
-  validates :user_id, uniqueness: { scope: :game_id, message: 'already has the stock of this game' }
-  delegate :id, :name, :price, to: :game, prefix: true
+  def is_users?(user_id)
+    
+    self.user_id == user_id
+  end
+  
+  def reduce_quantity!(num)
+    raise ArgumentError unless num > 0 && quantity >= num
 
-  enum state: { pending: 0, selling: 1 }
-
-  aasm column: :state, enum: true do
-    state :pending, initial: true
-    state :selling
-
-    event :open do
-      transitions from: :pending, to: :selling
-    end
-
-    event :close do
-      transitions from: :selling, to: :pending
-    end
+    decrement!(:quantity, num)
+    self.quantity
   end
 end

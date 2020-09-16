@@ -28,6 +28,7 @@ gem 'connection_pool'
 gem 'dotenv-rails'
 gem 'image_processing', '~> 1.2'
 gem "aws-sdk-s3", require: false
+gem 'draper'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -37,6 +38,7 @@ gem 'aasm'
 gem 'mailgun-ruby'
 gem 'seed-fu'
 gem 'faker'
+gem 'rack-attack'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -46,6 +48,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'simplecov', require: false
   gem 'guard-rspec', require: false
+  gem 'shoulda'
 end
 
 group :development do

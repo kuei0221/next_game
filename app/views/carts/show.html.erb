@@ -10,7 +10,7 @@
     <th></th>
   </thead>
   <tbody>
-    <% @current_cart.cart_items.each do |item| %>
+    <% current_cart.cart_items.each do |item| %>
       <tr>
         <td><%= link_to item.game_name, game_path(item.game_id) %></td>
         <td><%= item.price %></td>
@@ -30,11 +30,11 @@
       <td></td>
       <td></td>
       <td></td>
-      <td><%= @current_cart.total_price %></td>
+      <td><%= current_cart.total_price %></td>
       <td></td>
     </tr>
   </tbody>
 </table>
 
-<%= link_to 'CheckOut!', '#', class: 'btn btn-lg btn-primary btn-block' %>
+<%= link_to 'CheckOut!', new_order_path, class: 'btn btn-lg btn-primary btn-block' %>
 

@@ -106,8 +106,8 @@ RSpec.describe Cart do
     end
   end
 
-  describe '#clear_cart' do
-    subject { cart.clear_cart }
+  describe '#clear!' do
+    subject { cart.clear! }
     before { cart.items << stock.id }
 
     it 'clear items' do
@@ -119,7 +119,51 @@ RSpec.describe Cart do
     end
   end
 
-  describe '#checkout' do
-    # TODO: add test when it is implemented
+  describe '#checkout!' do
+    subject { cart.checkout! }
+    
+    let(:stock_1) { create(:stock, price: 1000) }
+    let(:stock_2) { create(:stock, price: 1500) }
+    
+    before do
+      cart.add_item(stock_1.id, 3)
+      cart.add_item(stock_2.id, 2)
+    end
+
+    context 'when checkout success' do
+      before { allow(item).to receive(:checkout).and_return(true) }
+      it { is_expected.to be_nil }
+    end
+    
+    context 'when checkout fail' do
+      before do
+        allow(item).to receive(:checkout).and_return(false)
+        allow(cart).to receive(:gather_error!)
+        allow(cart.errors).to receive(:any?).and_return true
+      end
+      
+      it do
+        expect { subject }.to raise_error Cart::CheckoutError
+      end
+    end
+  end
+
+  describe '#register!' do
+    let(:cart) { described_class.new('test_session_cart_id') }
+    before do
+      allow(cart.items).to receive(:rename).and_return(true)
+      allow(cart.uuid).to receive(:rename).and_return(true)
+    end
+
+    subject { cart.register!(user.id) }
+
+    it 'should change user_id' do
+      expect { subject }.to change { cart.user_id }.from('test_session_cart_id').to(user.id)
+    end
+    it 'should rename redis key of items and uuid' do
+      subject
+      expect(cart.items).to have_received(:rename).with("cart:#{user.id}:items")
+      expect(cart.uuid).to have_received(:rename).with("cart:#{user.id}:uuid")
+    end
   end
 end

@@ -2,8 +2,8 @@
   <h5 class="my-0 mr-md-auto font-weight-normal"><%= link_to 'NextGame', root_path %></h5>
   <nav class="my-2 my-md-0 mr-md-3">
     <%= link_to 'Games', games_path, class: 'p-2 text-dark' %>
+    <%= link_to 'Cart', cart_path, class: 'p-2 text-dark' %>
     <% if user_signed_in? %>
-      <%= link_to 'Cart', cart_path, class: 'p-2 text-dark' %>
       <%= link_to 'Stock', stocks_path, class: 'p-2 text-dark' %>
       <%= link_to 'LogOut', destroy_user_session_path, method: 'delete', class: 'p-2 btn btn-outline-danger btn-sm' %>
     <% else %>

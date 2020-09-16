@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :stock do
+  factory :product, class: Product do
     association :game, strategy: :create
     association :user, strategy: :create
     price { 500 }
@@ -14,6 +14,14 @@ FactoryBot.define do
 
     trait :selling do
       state { 1 }
+    end
+
+    factory :stock, class: Stock do
+      type { 'Stock' }
+    end
+
+    factory :order_item, class: OrderItem do
+      type { 'OrderItem' }
     end
   end
 end

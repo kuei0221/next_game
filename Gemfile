@@ -28,7 +28,7 @@ gem 'redis-objects'
 gem 'aws-sdk-s3', require: false
 gem 'dotenv-rails'
 gem 'draper'
-gem 'image_processing', '~> 1.2'
+gem 'image_processing', '~> 1.12'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'aasm'
